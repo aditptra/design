@@ -1,0 +1,189 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+  .carousel-wrap { display: flex; flex-direction: column; gap: 24px; font-family: 'DM Sans', sans-serif; }
+  .slide { background: #0d0f14; width: 100%; max-width: 420px; aspect-ratio: 4/5; margin: 0 auto; padding: 32px 28px; box-sizing: border-box; border-radius: 14px; display: flex; flex-direction: column; }
+  .tag { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .tag-bar { width: 12px; height: 12px; background: #f5c542; flex-shrink: 0; }
+  .tag-text { font-size: 11px; letter-spacing: 0.1em; color: #f5c542; text-transform: uppercase; font-weight: 500; }
+  h1.headline { font-family: 'Bebas Neue', sans-serif; font-size: 36px; line-height: 1.05; color: #e8eaf0; margin: 0 0 14px; }
+  h1.headline span { color: #f5c542; }
+  .ticker-big { font-family: 'Bebas Neue', sans-serif; font-size: 60px; color: #f5c542; line-height: 1; margin: 0 0 8px; }
+  .sub { font-size: 14px; color: #8a8fa8; line-height: 1.5; margin: 0 0 4px; }
+  .body-text { font-size: 12.5px; color: #8a8fa8; line-height: 1.6; margin: 0 0 12px; }
+  .body-text b { color: #e8eaf0; font-weight: 500; }
+  .body-text .red { color: #e03a3a; font-weight: 500; }
+  .body-text .green { color: #2ecc71; font-weight: 500; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat-box { background: #13161e; border: 1px solid #1e2230; border-radius: 6px; padding: 10px 12px; }
+  .stat-label { font-size: 9px; letter-spacing: 0.06em; color: #8a8fa8; text-transform: uppercase; margin-bottom: 4px; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8eaf0; line-height: 1; }
+  .stat-val.red { color: #e03a3a; }
+  .stat-val.green { color: #2ecc71; }
+  .chart-card { background: #13161e; border: 1px solid #1e2230; border-radius: 8px; padding: 16px 16px 10px; margin-bottom: 12px; }
+  .legend { display: flex; gap: 16px; margin-bottom: 10px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 10px; color: #8a8fa8; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; }
+  .chart-area { display: flex; align-items: flex-end; justify-content: space-around; height: 120px; gap: 8px; padding: 0 4px; position: relative; }
+  .year-group { display: flex; flex-direction: column; align-items: center; gap: 6px; flex: 1; }
+  .bars { display: flex; align-items: flex-end; gap: 4px; height: 95px; position: relative; }
+  .bar { width: 16px; border-radius: 3px 3px 0 0; position: relative; }
+  .bar-rev { background: #5a6378; }
+  .bar-profit { background: #e03a3a; }
+  .bar-val { position: absolute; top: -16px; left: 50%; transform: translateX(-50%); font-size: 8px; color: #e8eaf0; white-space: nowrap; }
+  .year-label { font-size: 10px; color: #8a8fa8; font-weight: 500; }
+  .risk-card { background: #13161e; border: 1px solid #1e2230; border-left: 3px solid #e03a3a; border-radius: 6px; padding: 12px 14px; margin-bottom: 10px; }
+  .risk-num { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: #e03a3a; margin-bottom: 4px; }
+  .risk-title { font-size: 12px; color: #e8eaf0; font-weight: 500; margin-bottom: 4px; }
+  .risk-desc { font-size: 11.5px; color: #8a8fa8; line-height: 1.5; }
+  .verdict-box { background: #1a1e2a; border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; }
+  .verdict-label { font-size: 10px; letter-spacing: 0.08em; color: #2ecc71; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .cta-box { background: #e03a3a; border-radius: 6px; padding: 16px 18px; text-align: center; margin-top: auto; }
+  .cta-box p { font-family: 'Bebas Neue', sans-serif; font-size: 17px; color: #fff; margin: 0; line-height: 1.2; }
+  .fund-card { background: #13161e; border: 1px solid #1e2230; border-left: 3px solid #f5c542; border-radius: 6px; padding: 11px 14px; margin-bottom: 9px; }
+  .fund-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .fund-title { font-size: 12.5px; color: #e8eaf0; font-weight: 500; }
+  .fund-pct { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: #f5c542; }
+  .fund-amt { font-size: 10.5px; color: #8a8fa8; margin-bottom: 4px; }
+  .fund-list { font-size: 10.5px; color: #8a8fa8; line-height: 1.5; }
+  .div-stat { background: #13161e; border: 1px solid #1e2230; border-radius: 8px; padding: 24px 20px; text-align: center; margin-bottom: 16px; }
+  .div-pct { font-family: 'Bebas Neue', sans-serif; font-size: 56px; color: #2ecc71; line-height: 1; }
+  .div-label { font-size: 11px; color: #8a8fa8; letter-spacing: 0.05em; text-transform: uppercase; margin-top: 6px; }
+</style>
+
+<div class="carousel-wrap">
+
+  <div class="slide" data-document-role="page" data-label="Cover - PRDL IPO">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">IPO Watch · Juli 2026</span></div>
+    <div class="ticker-big">PRDL</div>
+    <h1 class="headline">ANAK USAHA <span>PRODIA</span> SEGERA IPO.</h1>
+    <p class="sub">Proline — produsen alat diagnostik medis (IVD). Murah secara valuasi, tapi ada alasannya.</p>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Business Overview">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Business Overview</span></div>
+    <h1 class="headline">SIAPA <span>PRDL</span> SEBENARNYA?</h1>
+    <p class="body-text"><b>PT Prodia Diagnostic Line Tbk</b> (Proline) — produsen alat kesehatan In Vitro Diagnostic (IVD) sejak 2010. Bagian dari ekosistem Grup Prodia.</p>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">Kepemilikan PRDA</div><div class="stat-val">39%</div></div>
+      <div class="stat-box"><div class="stat-label">Pengguna Akhir</div><div class="stat-val">7.611</div></div>
+      <div class="stat-box"><div class="stat-label">Kab/Kota Terjangkau</div><div class="stat-val">370</div></div>
+      <div class="stat-box"><div class="stat-label">Target Dana IPO</div><div class="stat-val">62,75M</div></div>
+    </div>
+    <p class="body-text">IPO lepas 522,9 juta saham (30%) di harga Rp100-120/saham. Mayoritas dana untuk lunasi utang bank (56,8%), sisanya capex dan modal kerja.</p>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Analisis Keuangan">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Analisis Keuangan</span></div>
+    <h1 class="headline">NAIK, JATUH, <span>NAIK LAGI.</span></h1>
+    <div class="chart-card">
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot" style="background:#5a6378;"></div>Pendapatan (Rp M)</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e03a3a;"></div>Laba Bersih (Rp M)</div>
+      </div>
+      <div class="chart-area">
+        <div class="year-group">
+          <div class="bars">
+            <div class="bar bar-rev" style="height:95px;"><span class="bar-val">111,8</span></div>
+            <div class="bar bar-profit" style="height:30px;"><span class="bar-val">35,8</span></div>
+          </div>
+          <div class="year-label">2023</div>
+        </div>
+        <div class="year-group">
+          <div class="bars">
+            <div class="bar bar-rev" style="height:50px;"><span class="bar-val">58,7</span></div>
+            <div class="bar bar-profit" style="height:8px;"><span class="bar-val" style="top:-14px;">10,0</span></div>
+          </div>
+          <div class="year-label">2024</div>
+        </div>
+        <div class="year-group">
+          <div class="bars">
+            <div class="bar bar-rev" style="height:63px;"><span class="bar-val">74,4</span></div>
+            <div class="bar bar-profit" style="height:14px;"><span class="bar-val" style="top:-14px;">17,0</span></div>
+          </div>
+          <div class="year-label">2025</div>
+        </div>
+      </div>
+    </div>
+    <p class="body-text">2023 dipompa proyek <b>one-off Kemenkes</b> yang tidak berulang. Begitu hilang di 2024, laba ambruk <span class="red">-72%</span>. Tapi 2025 rebound <span class="green">+70%</span> bukan dari proyek dadakan — didorong volume penjualan rutin & margin Kimia Klinik yang naik dari 64% ke 67%. Lebih organik, meski basisnya masih kecil.</p>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Konsentrasi Risiko">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Konsentrasi Risiko</span></div>
+    <h1 class="headline">3 LAPIS <span>KETERGANTUNGAN.</span></h1>
+    <div class="risk-card">
+      <div class="risk-num">01 — SEGMEN PRODUK</div>
+      <div class="risk-title">Kimia Klinik = tulang punggung</div>
+      <div class="risk-desc">81% pendapatan, 89% laba usaha berasal dari satu segmen ini saja.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-num">02 — SUMBER DANA</div>
+      <div class="risk-title">Mayoritas dari pemerintah</div>
+      <div class="risk-desc">66% pendapatan dari segmen pemerintah — sangat tergantung realisasi anggaran negara.</div>
+    </div>
+    <div class="risk-card">
+      <div class="risk-num">03 — DISTRIBUTOR</div>
+      <div class="risk-title">1 nama, 1/3 pendapatan</div>
+      <div class="risk-desc">Rajawali Nusindo sendirian = 33% pendapatan. Kontribusinya juga paling volatil (Rp86M di 2023, jatuh ke Rp24-25M).</div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Penggunaan Dana IPO">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Penggunaan Dana IPO</span></div>
+    <h1 class="headline">DUIT IPO <span>UNTUK APA?</span></h1>
+    <div class="fund-card">
+      <div class="fund-row"><span class="fund-title">01 — Pelunasan Utang</span><span class="fund-pct">56,8%</span></div>
+      <div class="fund-amt">~Rp35,6 miliar</div>
+      <div class="fund-list">Lunasi pokok pinjaman ke BCA & Bank Panin — turunkan beban bunga, perbaiki struktur permodalan.</div>
+    </div>
+    <div class="fund-card">
+      <div class="fund-row"><span class="fund-title">02 — Belanja Modal</span><span class="fund-pct">28,9%</span></div>
+      <div class="fund-amt">~Rp16,3 miliar</div>
+      <div class="fund-list">Mesin analyzer, kalibrasi on-site, kendaraan operasional, software ERP, renovasi lab biomolekuler.</div>
+    </div>
+    <div class="fund-card">
+      <div class="fund-row"><span class="fund-title">03 — Modal Kerja</span><span class="fund-pct">8,5%</span></div>
+      <div class="fund-amt">~Rp5,34 miliar</div>
+      <div class="fund-list">Mendukung aktivitas operasional sehari-hari.</div>
+    </div>
+    <div class="fund-card">
+      <div class="fund-row"><span class="fund-title">04 — Biaya Emisi</span><span class="fund-pct">5,7%</span></div>
+      <div class="fund-amt">~Rp3,59 miliar</div>
+      <div class="fund-list">Biaya terkait proses IPO itu sendiri.</div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Kebijakan Dividen">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Kebijakan Dividen</span></div>
+    <h1 class="headline">BAGI DIVIDEN, <span>TAPI BARU 2026.</span></h1>
+    <div class="div-stat">
+      <div class="div-pct">20%</div>
+      <div class="div-label">Maks. dari Laba Bersih</div>
+    </div>
+    <p class="body-text">PRDL berencana membagikan dividen tunai maksimal <b>20% dari laba bersih</b> mulai tahun buku 2026, dengan tetap mempertimbangkan persetujuan RUPS serta kebutuhan ekspansi perusahaan.</p>
+    <p class="body-text">Catatan: mayoritas dana IPO dipakai untuk <b>lunasi utang</b>, bukan ekspansi agresif. Jadi jangan harap pertumbuhan jangka pendek yang sangat cepat — ini langkah perbaikan fondasi dulu, baru tumbuh.</p>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Verdict">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Verdict</span></div>
+    <h1 class="headline">MURAH, <span>TAPI ADA SEBABNYA.</span></h1>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">P/E Indikatif</div><div class="stat-val">10,3-12,3x</div></div>
+      <div class="stat-box"><div class="stat-label">P/BV Indikatif</div><div class="stat-val">1,3-1,4x</div></div>
+    </div>
+    <div class="verdict-box">
+      <div class="verdict-label">Sisi Positif</div>
+      <p class="body-text" style="margin-bottom:0;">47% fasilitas kesehatan & 38% Dinas Kesehatan belum jadi pelanggan — ruang ekspansi luas. Margin Kimia Klinik naik dari 64% ke 67%.</p>
+    </div>
+    <p class="body-text">P/E 10,3-12,3x jauh di bawah rata-rata sektor kesehatan BEI, yang banyak diperdagangkan di atas 20-30x karena dianggap defensif dan bertumbuh jangka panjang. PRDL lebih murah karena perannya sebagai produsen B2B yang lebih kecil dan volatil, dengan tiga lapis konsentrasi risiko.</p>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Alternatif - CTA">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Alternatif</span></div>
+    <h1 class="headline">MAU SAHAM YANG <span>SUDAH PROVEN?</span></h1>
+    <p class="body-text">IPO selalu menarik perhatian — tapi belum terbukti di market, dan PRDL datang dengan tiga lapis risiko konsentrasi sekaligus. Saham yang sudah ada track record dan harganya jauh di bawah harga wajar? Itu yang lebih terukur risikonya.</p>
+    <div class="cta-box">
+      <p>Dapatkan Watchlist Saham Undervalued kami.</p>
+    </div>
+  </div>
+
+</div>

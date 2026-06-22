@@ -1,0 +1,126 @@
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+  .carousel-wrap { display: flex; flex-direction: column; gap: 24px; font-family: 'DM Sans', sans-serif; }
+  .slide { background: #0d0f14; width: 100%; max-width: 420px; aspect-ratio: 4/5; margin: 0 auto; padding: 32px 28px; box-sizing: border-box; border-radius: 14px; display: flex; flex-direction: column; }
+  .tag { display: flex; align-items: center; gap: 8px; margin-bottom: 18px; }
+  .tag-bar { width: 12px; height: 12px; background: #f5c542; flex-shrink: 0; }
+  .tag-text { font-size: 11px; letter-spacing: 0.1em; color: #f5c542; text-transform: uppercase; font-weight: 500; }
+  h1.headline { font-family: 'Bebas Neue', sans-serif; font-size: 38px; line-height: 1.05; color: #e8eaf0; margin: 0 0 16px; }
+  h1.headline span { color: #f5c542; }
+  .ticker-big { font-family: 'Bebas Neue', sans-serif; font-size: 64px; color: #f5c542; line-height: 1; margin: 0 0 8px; }
+  .sub { font-size: 14px; color: #8a8fa8; line-height: 1.5; margin: 0 0 4px; }
+  .card { background: #13161e; border: 1px solid #1e2230; border-left: 3px solid #f5c542; border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; }
+  .card-row { display: flex; justify-content: space-between; font-size: 12px; color: #8a8fa8; padding: 4px 0; }
+  .card-row b { color: #e8eaf0; font-weight: 500; }
+  .card-title { font-size: 11px; letter-spacing: 0.05em; color: #f5c542; text-transform: uppercase; margin-bottom: 8px; font-weight: 500; }
+  .body-text { font-size: 13px; color: #8a8fa8; line-height: 1.65; margin: 0 0 14px; }
+  .body-text b { color: #e8eaf0; font-weight: 500; }
+  .body-text .red { color: #e03a3a; font-weight: 500; }
+  .body-text .green { color: #2ecc71; font-weight: 500; }
+  .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+  .stat-box { background: #13161e; border: 1px solid #1e2230; border-radius: 6px; padding: 10px 12px; }
+  .stat-label { font-size: 9px; letter-spacing: 0.06em; color: #8a8fa8; text-transform: uppercase; margin-bottom: 4px; }
+  .stat-val { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: #e8eaf0; line-height: 1; }
+  .stat-val.red { color: #e03a3a; }
+  .stat-val.green { color: #2ecc71; }
+  .footer-row { margin-top: auto; display: flex; align-items: center; justify-content: center; gap: 8px; padding-top: 12px; }
+  .logo-icon { width: 24px; height: 24px; border-radius: 5px; background: #1a1e2a; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 13px; color: #e8eaf0; letter-spacing: 0.05em; }
+  .logo-text span { color: #e03a3a; }
+  .slide-num { position: absolute; }
+  .verdict-box { background: #1a1e2a; border-radius: 6px; padding: 14px 16px; margin-bottom: 12px; }
+  .verdict-label { font-size: 10px; letter-spacing: 0.08em; color: #2ecc71; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .risk-item { font-size: 12px; color: #8a8fa8; line-height: 1.5; margin-bottom: 6px; padding-left: 14px; position: relative; }
+  .risk-item:before { content: "—"; position: absolute; left: 0; color: #e03a3a; }
+  .cta-box { background: #e03a3a; border-radius: 6px; padding: 16px 18px; text-align: center; margin-top: auto; }
+  .cta-box p { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: #fff; margin: 0; line-height: 1.2; }
+</style>
+
+<div class="carousel-wrap">
+
+  <div class="slide" data-document-role="page" data-label="Cover - JELI IPO">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">IPO Watch · Juli 2026</span></div>
+    <div class="ticker-big">JELI</div>
+    <h1 class="headline">PRODUSEN <span>INACO</span> SEGERA IPO.</h1>
+    <p class="sub">PT Niramas Utama Tbk — market leader dessert kelapa di Indonesia sejak 1990. Layak dibeli, atau cuma hype?</p>
+    <div class="footer-row">
+      <div class="logo-icon"><svg width="14" height="14" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#f5c542"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="17" cy="10" r="2" fill="#e03a3a"/></svg></div>
+      <div class="logo-text">SNIPER<span>SAHAM</span></div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Business Overview">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Business Overview</span></div>
+    <h1 class="headline">SIAPA <span>JELI</span> SEBENARNYA?</h1>
+    <p class="body-text"><b>PT Niramas Utama Tbk</b>, pemilik brand <b>INACO</b> — pionir nata de coco di Indonesia sejak 1990. Market leader di 3 kategori dessert berbasis kelapa.</p>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">Pasar Jelly</div><div class="stat-val">49,6%</div></div>
+      <div class="stat-box"><div class="stat-label">Pasar Nata de Coco</div><div class="stat-val">19,9%</div></div>
+      <div class="stat-box"><div class="stat-label">Pasar Pudding</div><div class="stat-val">16,0%</div></div>
+      <div class="stat-box"><div class="stat-label">Titik Distribusi</div><div class="stat-val">251</div></div>
+    </div>
+    <p class="body-text">4 fasilitas produksi (Bekasi, Pandaan, Pontianak, Sukabumi). Ekspor ke 7 negara. IPO lepas 350 juta saham (25,93%), target dana <b>Rp392 miliar</b>.</p>
+    <div class="footer-row">
+      <div class="logo-icon"><svg width="14" height="14" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#f5c542"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="17" cy="10" r="2" fill="#e03a3a"/></svg></div>
+      <div class="logo-text">SNIPER<span>SAHAM</span></div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Analisis Keuangan">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Analisis Keuangan</span></div>
+    <h1 class="headline">LABA NAIK, <span>PENDAPATAN TURUN.</span></h1>
+    <p class="body-text">Pendapatan turun 2 tahun beruntun — tapi laba bersih melonjak drastis. Cerita efisiensi, bukan pertumbuhan organik.</p>
+    <div class="card">
+      <div class="card-title">Pendapatan (Rp Miliar)</div>
+      <div class="card-row"><span>2023</span><b>838,9</b></div>
+      <div class="card-row"><span>2024</span><b>788,4</b></div>
+      <div class="card-row"><span>2025</span><b class="red">753,0</b></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Laba Bersih (Rp Miliar)</div>
+      <div class="card-row"><span>2023</span><b>1,68</b></div>
+      <div class="card-row"><span>2024</span><b>11,63</b></div>
+      <div class="card-row"><span>2025</span><b class="green">39,03 (+235%)</b></div>
+    </div>
+    <p class="body-text">Net margin naik dari <b>0,2%</b> ke <b>5,18%</b>. Tapi arus kas operasi turun <span class="red">-83,4%</span> di 2025 — laba di atas kertas, kas belum sepenuhnya mengikuti.</p>
+    <div class="footer-row">
+      <div class="logo-icon"><svg width="14" height="14" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#f5c542"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="17" cy="10" r="2" fill="#e03a3a"/></svg></div>
+      <div class="logo-text">SNIPER<span>SAHAM</span></div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Verdict">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Verdict</span></div>
+    <h1 class="headline">LAYAK DIBELI, <span>TAPI...</span></h1>
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-label">P/E Indikatif</div><div class="stat-val">23-29x</div></div>
+      <div class="stat-box"><div class="stat-label">ROE 2025</div><div class="stat-val green">26,8%</div></div>
+    </div>
+    <div class="verdict-box">
+      <div class="verdict-label">Kekuatan</div>
+      <p class="body-text" style="margin-bottom:0;">Brand 35 tahun, market leader jelas, laba & ROE melonjak signifikan.</p>
+    </div>
+    <div class="risk-item">Pendapatan masih menurun 2 tahun beruntun</div>
+    <div class="risk-item">Arus kas operasi melemah drastis (-83,4%)</div>
+    <div class="risk-item">Belum pernah bagi dividen sebelumnya</div>
+    <div class="risk-item">Valuasi P/E premium dibanding emiten sejenis</div>
+    <div class="footer-row">
+      <div class="logo-icon"><svg width="14" height="14" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#f5c542"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="17" cy="10" r="2" fill="#e03a3a"/></svg></div>
+      <div class="logo-text">SNIPER<span>SAHAM</span></div>
+    </div>
+  </div>
+
+  <div class="slide" data-document-role="page" data-label="Cara Mainnya - CTA">
+    <div class="tag"><div class="tag-bar"></div><span class="tag-text">Cara Mainnya</span></div>
+    <h1 class="headline">MAU TAU SAHAM <span>UNDERVALUED</span> SESUNGGUHNYA?</h1>
+    <p class="body-text">IPO selalu menarik perhatian — tapi belum terbukti di market. Saham yang sudah ada track record dan harganya jauh di bawah harga wajar? Itu yang lebih terukur risikonya.</p>
+    <div class="cta-box">
+      <p>Dapatkan Watchlist Saham Undervalued kami.</p>
+    </div>
+    <div class="footer-row">
+      <div class="logo-icon"><svg width="14" height="14" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="8" r="4" fill="#f5c542"/><path d="M3 19c0-4 3.6-7 8-7s8 3 8 7" stroke="#f5c542" stroke-width="1.5" stroke-linecap="round" fill="none"/><circle cx="17" cy="10" r="2" fill="#e03a3a"/></svg></div>
+      <div class="logo-text">SNIPER<span>SAHAM</span></div>
+    </div>
+  </div>
+
+</div>

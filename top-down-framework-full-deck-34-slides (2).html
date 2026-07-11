@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Top-Down Framework — 32 Slides</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&display=swap');
+
+  :root {
+    --bg: #0d0f14;
+    --card: #13161e;
+    --inner: #1a1e2a;
+    --gold: #f5c542;
+    --red: #e03a3a;
+    --green: #2ecc71;
+    --text: #e8eaf0;
+    --muted: #8a8fa8;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #333;
+    font-family: 'DM Sans', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+  }
+
+  .page {
+    width: 1080px;
+    height: 1350px;
+    background: var(--bg);
+    color: var(--text);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .crosshair-sm { position: absolute; top: 60px; left: 80px; width: 40px; height: 40px; }
+  .crosshair-sm svg { width: 100%; height: 100%; }
+
+  .slide-footer { position: absolute; bottom: 55px; left: 80px; right: 80px; display: flex; justify-content: space-between; font-size: 17px; color: var(--muted); letter-spacing: 1px; }
+
+  /* ===== COVER ===== */
+  .cover-page { display: flex; flex-direction: column; justify-content: center; padding: 100px 90px; }
+  .crosshair { position: absolute; top: 90px; left: 90px; width: 64px; height: 64px; }
+  .crosshair svg { width: 100%; height: 100%; }
+  .eyebrow { font-weight: 700; font-size: 22px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 28px; margin-top: 140px; }
+  .cover-title { font-family: 'Bebas Neue', sans-serif; font-size: 108px; line-height: 0.98; letter-spacing: 1px; max-width: 880px; }
+  .cover-title .accent { color: var(--gold); }
+  .cover-sub { font-weight: 400; font-size: 30px; line-height: 1.4; color: var(--muted); max-width: 760px; margin-top: 40px; }
+  .cover-divider { width: 120px; height: 5px; background: var(--gold); margin-top: 56px; margin-bottom: 56px; }
+  .cover-footer { position: absolute; bottom: 90px; left: 90px; right: 90px; display: flex; justify-content: space-between; align-items: center; font-size: 22px; color: var(--muted); letter-spacing: 1px; }
+  .cover-footer .brand { font-family: 'Bebas Neue', sans-serif; font-size: 30px; color: var(--text); letter-spacing: 2px; }
+  .cover-footer .brand span { color: var(--gold); }
+
+  /* ===== DIVIDER ===== */
+  .divider-page { display: flex; flex-direction: column; justify-content: center; padding: 100px 90px; }
+  .divider-num { font-family: 'Bebas Neue', sans-serif; font-size: 220px; color: var(--inner); position: absolute; top: 260px; left: 80px; letter-spacing: 2px; }
+  .divider-content { position: relative; z-index: 2; margin-top: 260px; }
+  .divider-eyebrow { font-weight: 700; font-size: 20px; letter-spacing: 4px; color: var(--gold); text-transform: uppercase; margin-bottom: 22px; }
+  .divider-title { font-family: 'Bebas Neue', sans-serif; font-size: 92px; line-height: 1; letter-spacing: 0.5px; max-width: 820px; margin-bottom: 40px; }
+  .divider-line { width: 100px; height: 5px; background: var(--gold); margin-bottom: 40px; }
+  .divider-sub { font-size: 28px; line-height: 1.5; color: var(--muted); max-width: 720px; }
+
+  /* ===== TEXT/BULLETS ===== */
+  .content-page { padding: 90px 80px; display: flex; flex-direction: column; }
+  .slide-kicker { font-weight: 700; font-size: 20px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 18px; }
+  .slide-title { font-family: 'Bebas Neue', sans-serif; font-size: 58px; line-height: 1.04; letter-spacing: 0.5px; max-width: 900px; margin-bottom: 54px; }
+  .slide-title.tight { margin-bottom: 36px; }
+  .bullet-block { background: var(--card); border-radius: 12px; padding: 32px 38px; margin-bottom: 18px; border-left: 4px solid var(--gold); }
+  .bullet-block.alt { border-left-color: var(--green); }
+  .bullet-block.warn { border-left-color: var(--red); }
+  .bullet-label { font-weight: 700; font-size: 18px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+  .bullet-label.alt { color: var(--green); }
+  .bullet-label.warn { color: var(--red); }
+  .bullet-text { font-size: 23px; line-height: 1.48; color: var(--text); }
+  .bullet-text.muted { color: var(--muted); font-size: 20px; }
+  .quote-line { font-weight: 700; font-size: 26px; line-height: 1.4; color: var(--gold); margin-top: 18px; max-width: 860px; }
+  .plain-list { list-style: none; }
+  .plain-list li { font-size: 23px; line-height: 1.55; color: var(--text); margin-bottom: 14px; padding-left: 34px; position: relative; }
+  .plain-list li::before { content: "—"; position: absolute; left: 0; color: var(--gold); }
+  .verify-tag { font-size: 15px; color: var(--muted); font-style: italic; margin-top: 8px; }
+
+  /* ===== FUNNEL VISUAL ===== */
+  .funnel-wrap { display: flex; flex-direction: column; align-items: center; gap: 18px; margin-top: 30px; }
+  .funnel-bar { display: flex; align-items: center; justify-content: center; font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 0.5px; color: var(--bg); background: var(--gold); border-radius: 8px; height: 78px; }
+  .funnel-bar.step2 { background: #e0b93a; }
+  .funnel-bar.step3 { background: #cba52e; }
+  .funnel-bar.step4 { background: #b69122; }
+
+  /* ===== TABLE ===== */
+  .sector-table { width: 100%; border-collapse: separate; border-spacing: 0 14px; }
+  .sector-table thead th { font-weight: 700; font-size: 19px; letter-spacing: 1.5px; text-transform: uppercase; text-align: left; padding: 0 26px 14px 26px; color: var(--muted); border-bottom: 2px solid var(--inner); }
+  .sector-table thead th:first-child { color: var(--text); }
+  .sector-table thead th.favored { color: var(--green); }
+  .sector-table thead th.pressured { color: var(--red); }
+  .sector-table tbody tr { background: var(--card); }
+  .sector-table tbody td { padding: 26px 26px; vertical-align: top; font-size: 21px; line-height: 1.42; }
+  .sector-table tbody td:first-child { font-family: 'Bebas Neue', sans-serif; font-size: 27px; letter-spacing: 0.3px; color: var(--gold); width: 24%; border-left: 4px solid var(--gold); }
+  .sector-table tbody td.favored { color: var(--text); width: 38%; }
+  .sector-table tbody td.pressured { color: var(--text); width: 38%; }
+  .sector-table tbody tr td:first-child { border-radius: 8px 0 0 8px; }
+  .sector-table tbody tr td:last-child { border-radius: 0 8px 8px 0; }
+  .dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 10px; }
+  .dot.green { background: var(--green); }
+  .dot.red { background: var(--red); }
+
+  /* ===== CYCLE STAGE TABLE ===== */
+  .stage-table { width: 100%; border-collapse: separate; border-spacing: 0 14px; }
+  .stage-table tbody tr { background: var(--card); }
+  .stage-table tbody td { padding: 26px 26px; vertical-align: top; font-size: 21px; line-height: 1.42; }
+  .stage-table tbody td:first-child { font-family: 'Bebas Neue', sans-serif; font-size: 26px; width: 22%; border-radius: 8px 0 0 8px; }
+  .stage-table tbody td:last-child { border-radius: 0 8px 8px 0; width: 78%; color: var(--text); }
+  .stage-early td:first-child { color: var(--green); border-left: 4px solid var(--green); }
+  .stage-mid td:first-child { color: var(--gold); border-left: 4px solid var(--gold); }
+  .stage-late td:first-child { color: var(--red); border-left: 4px solid var(--red); }
+
+  /* ===== STAT BLOCK (breadth check) ===== */
+  .stat-block { background: var(--card); border-radius: 14px; padding: 44px; text-align: center; margin-bottom: 24px; }
+  .stat-number { font-family: 'Bebas Neue', sans-serif; font-size: 90px; color: var(--gold); line-height: 1; }
+  .stat-caption { font-size: 20px; color: var(--muted); margin-top: 10px; }
+
+  /* ===== SCORING TABLE (sintesis) ===== */
+  .score-row { display: flex; align-items: center; background: var(--card); border-radius: 10px; padding: 22px 30px; margin-bottom: 12px; }
+  .score-signal { font-size: 22px; font-weight: 700; flex: 1; }
+  .score-value { font-family: 'Bebas Neue', sans-serif; font-size: 30px; width: 90px; text-align: center; border-radius: 6px; padding: 4px 0; }
+  .score-value.pos { background: var(--red); color: var(--bg); }
+  .score-value.neu { background: var(--gold); color: var(--bg); }
+  .score-value.na { background: var(--inner); color: var(--muted); }
+
+  /* ===== CTA / CLOSE ===== */
+  .cta-block { background: var(--card); border-radius: 16px; padding: 46px 44px; margin-bottom: 26px; }
+  .cta-block.primary { border: 2px solid var(--gold); }
+  .cta-tag { font-weight: 700; font-size: 18px; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .cta-tag.secondary { color: var(--muted); }
+  .cta-title { font-family: 'Bebas Neue', sans-serif; font-size: 46px; margin-bottom: 14px; }
+  .cta-desc { font-size: 22px; color: var(--muted); line-height: 1.5; margin-bottom: 18px; }
+
+  .ticker-badge { display: inline-block; background: var(--gold); color: var(--bg); font-family: 'Bebas Neue', sans-serif; font-size: 40px; padding: 10px 26px; border-radius: 8px; letter-spacing: 1px; margin-bottom: 30px; }
+</style>
+</head>
+<body>
+
+<!-- SLIDE 1 — COVER -->
+<div class="page cover-page" data-document-role="page" data-label="Slide 1 - Cover">
+  <div class="crosshair"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2.5"/><circle cx="32" cy="32" r="4" fill="#f5c542"/><line x1="32" y1="0" x2="32" y2="16" stroke="#f5c542" stroke-width="2.5"/><line x1="32" y1="48" x2="32" y2="64" stroke="#f5c542" stroke-width="2.5"/><line x1="0" y1="32" x2="16" y2="32" stroke="#f5c542" stroke-width="2.5"/><line x1="48" y1="32" x2="64" y2="32" stroke="#f5c542" stroke-width="2.5"/></svg></div>
+  <div class="eyebrow">Panduan Metodologi</div>
+  <div class="cover-title">TOP-DOWN<br><span class="accent">FRAMEWORK</span></div>
+  <div class="cover-divider"></div>
+  <div class="cover-sub">Dari 900+ saham BEI ke watchlist yang masuk akal — proses yang bisa kamu ulang setiap bulan, sebelum masuk ke valuasi.</div>
+  <div class="cover-footer"><div class="brand">SNIPER<span>SAHAM</span></div><div>34 SLIDE</div></div>
+</div>
+
+<!-- SLIDE 2 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 2 - Masalahnya">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Framing</div>
+    <div class="slide-title">Masalahnya</div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">900+ Saham, Tanpa Sistem</div>
+      <div class="bullet-text">Ada 900+ saham di BEI. Tanpa sistem, kamu jatuh ke salah satu dari dua kegagalan ini:</div>
+    </div>
+    <ul class="plain-list" style="margin-top:10px;">
+      <li><strong>Analysis paralysis</strong> — nggak pernah milih apa-apa</li>
+      <li><strong>"Ikut rekomendasi"</strong> — beli tanpa ngerti alasannya</li>
+    </ul>
+    <div class="quote-line">Panduan ini mengganti pertanyaan "saham apa yang bagus?" jadi "sektor apa, dan kenapa, sekarang?"</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>2 / 34</div></div>
+</div>
+
+<!-- SLIDE 3 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 3 - Ini Bukan">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Framing</div>
+    <div class="slide-title">Ini Bukan Prediksi</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Proses, Bukan Ramalan</div>
+      <div class="bullet-text">Ini adalah proses filtering, bukan sistem prediksi. Tidak ada klaim hasil pasti — kondisi macro bisa berubah.</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-text" style="font-weight:700;">Ini bukan rekomendasi jual atau beli saham. Framework ini membantu proses screening, bukan janji profit.</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-text" style="font-weight:700;">Selalu lakukan riset sendiri sebelum mengambil keputusan investasi.</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>3 / 34</div></div>
+</div>
+
+<!-- SLIDE 4 — FUNNEL -->
+<div class="page content-page" data-document-role="page" data-label="Slide 4 - Gambaran Framework">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Framing</div>
+    <div class="slide-title">Gambaran Framework</div>
+    <div class="funnel-wrap">
+      <div class="funnel-bar" style="width:100%;">1. MACRO — Baca Kondisi</div>
+      <div class="funnel-bar step2" style="width:82%;">2. SECTOR — Petakan Pemenang</div>
+      <div class="funnel-bar step3" style="width:64%;">3. SCREEN — Saring Fundamental</div>
+      <div class="funnel-bar step4" style="width:46%;">4. SHORTLIST — Siap Divaluasi</div>
+    </div>
+    <div class="quote-line" style="text-align:center; align-self:center;">Setelah dapat shortlist — baru masuk ke valuasi</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>4 / 34</div></div>
+</div>
+
+<!-- SLIDE 5 — DIVIDER SECTION 2 -->
+<div class="page divider-page" data-document-role="page" data-label="Slide 5 - Divider Section 2">
+  <div class="divider-num">02</div>
+  <div class="divider-content">
+    <div class="divider-eyebrow">Bagian 02</div>
+    <div class="divider-title">Membaca<br>Macro</div>
+    <div class="divider-line"></div>
+    <div class="divider-sub">5 sinyal yang menentukan sektor mana yang diuntungkan — dan mana yang harus kamu hindari dulu.</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>5 / 34</div></div>
+</div>
+
+<!-- SLIDE 6 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 6 - Apa Artinya Membaca Macro">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Membaca Macro</div>
+    <div class="slide-title">Apa Artinya "Membaca<br>Macro" untuk Retail</div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Bukan</div>
+      <div class="bullet-text">Memprediksi GDP atau kebijakan The Fed</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Adalah</div>
+      <div class="bullet-text">Membaca 3-5 sinyal yang secara konsisten menggeser sektor mana yang diuntungkan atau tertekan</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>6 / 34</div></div>
+</div>
+
+<!-- SLIDE 7 — USD/IDR elaborated -->
+<div class="page content-page" data-document-role="page" data-label="Slide 7 - USD IDR">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Primer #1</div>
+    <div class="slide-title">USD/IDR</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Kenapa #1</div>
+      <div class="bullet-text">Langsung menyentuh margin importir/eksportir, berkorelasi dengan foreign flow</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Threshold Konkret</div>
+      <div class="bullet-text">Melemah konsisten selama 2+ minggu berturut-turut (bukan cuma sehari-dua) = sinyal kuat yang layak direspons. Spike sehari-dua yang langsung reda = noise, jangan buru-buru bereaksi</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Case Study</div>
+      <div class="bullet-text">USD/IDR bergerak menuju ~18.000 pertengahan 2026</div>
+      <div class="verify-tag">*kurs bergerak harian, cek angka terkini</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Jadi, Apa Follow-Up-nya?</div>
+      <div class="bullet-text">Rupiah sempat sentuh titik terlemah pertengahan Juni, lalu sedikit pulih — tapi masuk Juli, pelemahan berlanjut 3 minggu berturut-turut. Ini yang lolos threshold "2+ minggu konsisten" di atas, bukan spike yang cuma sehari-dua. Tapi sebelum simpulkan "eksportir pasti diuntungkan" — cek dulu APA PENYEBAB pelemahannya. Caranya di slide berikutnya</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>7 / 34</div></div>
+</div>
+
+<!-- SLIDE NEW — Structural vs Confidence-Crisis -->
+<div class="page content-page" data-document-role="page" data-label="Slide 8 - Structural vs Confidence Crisis">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#e03a3a" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#e03a3a"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Primer #1 — Penting</div>
+    <div class="slide-title">Bukan Semua Pelemahan<br>Rupiah Itu Sama</div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Structural / Competitiveness-Driven</div>
+      <div class="bullet-text">Ciri-cirinya: pergerakan gradual (bukan mendadak), cadangan devisa stabil/naik, neraca dagang masih positif, yield obligasi stabil. Di kondisi ini, margin eksportir biasanya tetap diuntungkan dari sisi translasi</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Confidence-Crisis / Capital-Flight-Driven</div>
+      <div class="bullet-text">Ciri-cirinya: pergerakan tajam/mendadak, cadangan devisa turun (BI terpaksa jual USD untuk menahan rupiah), yield obligasi melonjak, outflow asing di berbagai kelas aset sekaligus. Ini biasanya diikuti sell-off broad-based — eksportir sekalipun ikut tertekan, bukan diuntungkan</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Konteks 2026</div>
+      <div class="bullet-text">Pelemahan rupiah pertengahan 2026 didorong capital flight & confidence crisis (risiko reklasifikasi MSCI, downgrade rating kredit, outflow asing besar) — bukan competitiveness. Respons default: kehati-hatian ekstra, bukan otomatis "beli eksportir"</div>
+      <div class="verify-tag">*cek kondisi terkini — krisis kepercayaan bisa mereda atau memburuk</div>
+    </div>
+    <div class="quote-line">Cek DULU kenapa rupiah melemah — baru putuskan sektor mana yang benar-benar diuntungkan</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>8 / 34</div></div>
+</div>
+<!-- SLIDE 8 — NEW: USD/IDR sector examples -->
+<div class="page content-page" data-document-role="page" data-label="Slide 9 - USD IDR Sektor Contoh">
+  <div class="slide-kicker">Sinyal Primer #1 — Lanjutan</div>
+  <div class="slide-title tight">USD/IDR: Contoh<br>Sektor Konkret</div>
+  <table class="sector-table">
+    <thead><tr><th>Rupiah Melemah</th><th class="favored"><span class="dot green"></span>Diuntungkan</th><th class="pressured"><span class="dot red"></span>Tertekan</th></tr></thead>
+    <tbody>
+      <tr><td>Eksportir<br>Komoditas</td><td class="favored">CPO, batu bara, nikel — pendapatan USD, biaya produksi rupiah</td><td class="pressured">—</td></tr>
+      <tr><td>Consumer<br>Impor-Berat</td><td class="favored">—</td><td class="pressured">Bahan baku/produk impor jadi lebih mahal, margin tertekan</td></tr>
+      <tr><td>Aviasi &<br>Logistik</td><td class="favored">—</td><td class="pressured">Biaya bahan bakar & sewa pesawat berbasis USD naik</td></tr>
+    </tbody>
+  </table>
+  <div class="verify-tag" style="margin-top:16px;">*contoh sub-sektor, bukan rekomendasi ticker spesifik</div>
+  <div class="bullet-block warn" style="margin-top:20px;">
+    <div class="bullet-label warn">Catatan Penting</div>
+    <div class="bullet-text">Pemetaan ini berlaku untuk pelemahan structural/competitiveness-driven. Kalau penyebabnya confidence-crisis (seperti 2026) — sell-off sering broad-based, jangan otomatis asumsikan eksportir aman</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>9 / 34</div></div>
+</div>
+
+<!-- SLIDE 9 — Tren IHSG elaborated -->
+<div class="page content-page" data-document-role="page" data-label="Slide 10 - Tren IHSG">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Primer #2</div>
+    <div class="slide-title">Tren IHSG</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Kenapa Penting</div>
+      <div class="bullet-text">Menunjukkan rezim risk-on/risk-off secara keseluruhan, terlepas dari sektor tertentu</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Cara Cek Konkret</div>
+      <div class="bullet-text">Bandingkan IHSG terhadap rata-rata 50 hari dan 200 hari — di atas keduanya = uptrend sehat, di bawah = waspada</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Catatan</div>
+      <div class="bullet-text">Jangan lihat level IHSG saja — cek juga partisipasi pasar (slide berikutnya)</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>10 / 34</div></div>
+</div>
+
+<!-- SLIDE 10 — NEW: Partisipasi Pasar practical check -->
+<div class="page content-page" data-document-role="page" data-label="Slide 11 - Partisipasi Pasar">
+  <div class="slide-kicker">Sinyal Primer #2 — Lanjutan</div>
+  <div class="slide-title tight">Cek Partisipasi Pasar</div>
+  <div class="bullet-block">
+    <div class="bullet-label">Cara Cek (Praktis)</div>
+    <div class="bullet-text">Buka RTI Business atau statistik IDX harian → lihat jumlah saham naik vs turun (advancing vs declining issues) hari itu</div>
+  </div>
+  <div class="bullet-block alt">
+    <div class="bullet-label alt">Alternatif Cepat</div>
+    <div class="bullet-text">Cek berapa dari 45 saham LQ45 yang hijau vs merah hari itu — proxy sederhana untuk partisipasi blue chip</div>
+  </div>
+  <div class="bullet-block warn">
+    <div class="bullet-label warn">Tanda Partisipasi Sempit</div>
+    <div class="bullet-text">IHSG naik, tapi rasio saham naik:turun sekitar 40:60 atau lebih buruk = rally ditopang segelintir saham besar, bukan partisipasi luas</div>
+  </div>
+  <div class="quote-line">Partisipasi luas (rasio naik:turun di atas 60:40) = uptrend lebih bisa dipercaya untuk window akumulasi</div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>11 / 34</div></div>
+</div>
+
+<!-- SLIDE 11 — Harga Komoditas elaborated -->
+<div class="page content-page" data-document-role="page" data-label="Slide 12 - Harga Komoditas">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Primer #3</div>
+    <div class="slide-title">Harga Komoditas</div>
+    <div class="bullet-block">
+      <div class="bullet-label">CPO, Batu Bara, Nikel</div>
+      <div class="bullet-text">Indonesia adalah eksportir batu bara dan CPO terbesar di dunia, serta pemain dominan di nikel & feroaloi</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Kenapa Ini Menggerakkan IHSG</div>
+      <div class="bullet-text">Banyak emiten berkapitalisasi besar di BEI adalah produsen komoditas ini — laba mereka naik-turun mengikuti harga komoditas global secara langsung, dan karena bobotnya besar di indeks, itu ikut menyeret arah IHSG secara keseluruhan</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Aturan Keputusan</div>
+      <div class="bullet-text">Siklus naik = cek dulu ada di fase mana (awal/tengah/akhir) sebelum asumsi "beli sektornya" — detail tiap fase di slide berikutnya</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Jebakan (Dibahas Nanti)</div>
+      <div class="bullet-text">Membeli sektor komoditas setelah pergerakan harga sudah terjadi</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>12 / 34</div></div>
+</div>
+
+<!-- SLIDE 12 — NEW: cycle stage table -->
+<div class="page content-page" data-document-role="page" data-label="Slide 13 - Ciri Fase Siklus Komoditas">
+  <div class="slide-kicker">Sinyal Primer #3 — Lanjutan</div>
+  <div class="slide-title tight">Ciri Tiap Fase Siklus</div>
+  <table class="stage-table">
+    <tbody>
+      <tr class="stage-early"><td>Awal</td><td>Harga menembus rata-rata 200 hari dengan volume naik, tapi masih &lt;70% dari puncak siklus sebelumnya — cek di TradingView</td></tr>
+      <tr class="stage-mid"><td>Tengah</td><td>Harga stabil di atas rata-rata 200 hari, sudah di rentang 70-100% dari puncak siklus sebelumnya, beberapa saham sejenis ikut rally bareng (bukan cuma satu)</td></tr>
+      <tr class="stage-late"><td>Akhir</td><td>Harga menembus/melampaui puncak siklus sebelumnya dengan pergerakan vertikal (naik &gt;20-30% dalam sebulan), volume transaksi melonjak drastis</td></tr>
+    </tbody>
+  </table>
+  <div class="quote-line" style="margin-top:20px;">Beli di fase awal/tengah, waspada di fase akhir</div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>13 / 34</div></div>
+</div>
+
+<!-- SLIDE 13 — BI Rate elaborated -->
+<div class="page content-page" data-document-role="page" data-label="Slide 14 - BI Rate">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Konfirmasi</div>
+    <div class="slide-title">BI Rate</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Konteks Saat Ini</div>
+      <div class="bullet-text">BI Rate berada di 5,75% per pertengahan 2026 (naik dari siklus penurunan sebelumnya, merespons tekanan rupiah) — cek level terkini sebelum menerapkan aturan di bawah</div>
+      <div class="verify-tag">*angka berubah tiap RDG (Rapat Dewan Gubernur) BI, cek bi.go.id</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Aturan Umum</div>
+      <div class="bullet-text">BI Rate turun → biaya modal lebih murah, valuasi saham cenderung lebih didukung, risk appetite naik. BI Rate naik → sebaliknya, tekanan ke valuasi secara umum</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Paling Terasa Di</div>
+      <div class="bullet-text">Perbankan & properti (kredit/KPR paling sensitif ke suku bunga) — tapi efek ke margin bank spesifik bisa dua arah tergantung struktur neraca tiap bank, jadi pakai efek pasar secara umum ini sebagai patokan, bukan klaim margin yang terlalu spesifik</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>14 / 34</div></div>
+</div>
+
+<!-- SLIDE 14 — Foreign Flow elaborated -->
+<div class="page content-page" data-document-role="page" data-label="Slide 15 - Foreign Flow">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sinyal Konfirmasi</div>
+    <div class="slide-title">Foreign Flow</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Kenapa Konfirmasi, Bukan Pemicu</div>
+      <div class="bullet-text">Cenderung lagging, berkorelasi dengan USD/IDR — foreign selling menekan rupiah, rupiah lemah memicu foreign selling lebih lanjut</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Structural</div>
+      <div class="bullet-text">Outflow bertahan beberapa minggu berturut-turut, dibarengi rupiah yang terus melemah</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Noise</div>
+      <div class="bullet-text">Outflow satu hari, rupiah tetap stabil — kemungkinan besar hanya rebalancing, bukan perubahan arah</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>15 / 34</div></div>
+</div>
+
+<!-- SLIDE 15 — Sintesis Macro traffic-light status -->
+<div class="page content-page" data-document-role="page" data-label="Slide 16 - Sintesis Macro">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:80px;">
+    <div class="slide-kicker">Sintesis</div>
+    <div class="slide-title tight">Menggabungkan Semua Sinyal<br>Jadi Satu Kesimpulan</div>
+    <div class="bullet-block alt" style="margin-bottom:24px;">
+      <div class="bullet-label alt">Cara Baca</div>
+      <div class="bullet-text">Kasih status tiap sinyal: Mendukung, Netral, atau Menekan. Lihat mana yang paling banyak — itu jadi arah regime keseluruhan</div>
+    </div>
+    <div class="score-row"><div class="score-signal">USD/IDR</div><div class="score-value pos" style="width:150px; font-size:20px; font-family:'DM Sans',sans-serif; font-weight:700;">Menekan</div></div>
+    <div class="score-row"><div class="score-signal">Tren IHSG</div><div class="score-value pos" style="width:150px; font-size:20px; font-family:'DM Sans',sans-serif; font-weight:700;">Menekan</div></div>
+    <div class="score-row"><div class="score-signal">Komoditas</div><div class="score-value neu" style="width:150px; font-size:18px; font-family:'DM Sans',sans-serif; font-weight:700;">Netral (Campuran)</div></div>
+    <div class="score-row"><div class="score-signal">BI Rate</div><div class="score-value neu" style="width:150px; font-size:20px; font-family:'DM Sans',sans-serif; font-weight:700;">Netral</div></div>
+    <div class="score-row"><div class="score-signal">Foreign Flow</div><div class="score-value pos" style="width:150px; font-size:20px; font-family:'DM Sans',sans-serif; font-weight:700;">Menekan</div></div>
+    <div class="bullet-block warn" style="margin-top:22px;">
+      <div class="bullet-label warn">Tally Lengkap (Per Awal Juli 2026)</div>
+      <div class="bullet-text">3 Menekan (USD/IDR, IHSG, Foreign Flow), 2 Netral (Komoditas, BI Rate), 0 Mendukung → mayoritas Menekan → regime condong <strong style="color:var(--red)">Defensif</strong></div>
+      <div class="verify-tag">*kondisi ini bergerak cepat — cek ulang tiap sinyal saat kamu baca ini, jangan asumsikan angka di atas masih berlaku</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>16 / 34</div></div>
+</div>
+
+<!-- SLIDE NEW — Apa Artinya Regime -->
+<div class="page content-page" data-document-role="page" data-label="Slide 17 - Apa Artinya Regime">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Sintesis — Lanjutan</div>
+    <div class="slide-title">Apa Artinya Tiga<br>Regime Ini?</div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Akumulasi</div>
+      <div class="bullet-text">Mayoritas sinyal mendukung → kondisi lebih kondusif untuk buka posisi baru sesuai hasil screening</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Wait & See</div>
+      <div class="bullet-text">Sinyal campur aduk, tidak ada arah dominan → lebih baik amati dulu, tahan keputusan besar sampai gambaran lebih jelas</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Defensif</div>
+      <div class="bullet-text">Mayoritas sinyal menekan → bukan berarti "market akan crash", ini sinyal kehati-hatian. Tahan dulu buka posisi baru, lebih selektif, dan kalau sudah pegang saham, perketat exit plan</div>
+    </div>
+    <div class="quote-line">Regime ini bisa berubah tiap kali kamu update sinyalnya — bukan label permanen</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>17 / 34</div></div>
+</div>
+<!-- SLIDE 16 — DIVIDER SECTION 3 -->
+<div class="page divider-page" data-document-role="page" data-label="Slide 18 - Divider Section 3">
+  <div class="divider-num">03</div>
+  <div class="divider-content">
+    <div class="divider-eyebrow">Bagian 03</div>
+    <div class="divider-title">Pemetaan<br>Sektor</div>
+    <div class="divider-line"></div>
+    <div class="divider-sub">Macro sudah jelas — sekarang sektor mana yang benar-benar diuntungkan, atau justru perlu dihindari?</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>18 / 34</div></div>
+</div>
+
+<!-- SLIDE 17 — TABLE -->
+<div class="page content-page" data-document-role="page" data-label="Slide 19 - Sector Mapping Table">
+  <div class="slide-kicker">Pemetaan Sektor</div>
+  <div class="slide-title">Kondisi Macro →<br>Sektor Diuntungkan</div>
+  <table class="sector-table" style="border-spacing: 0 10px;">
+    <thead><tr><th>Kondisi Macro</th><th class="favored"><span class="dot green"></span>Diuntungkan</th><th class="pressured"><span class="dot red"></span>Tertekan</th></tr></thead>
+    <tbody>
+      <tr><td style="padding:20px 26px;">Rupiah<br>Melemah</td><td class="favored" style="padding:20px 26px;">Eksportir komoditas (batu bara, CPO, nikel), pendapatan berbasis USD</td><td class="pressured" style="padding:20px 26px;">Consumer goods bergantung impor, aviasi, korporasi utang USD besar</td></tr>
+      <tr><td style="padding:20px 26px;">IHSG<br>Uptrend, Luas</td><td class="favored" style="padding:20px 26px;">Cyclicals, perbankan</td><td class="pressured" style="padding:20px 26px;">Defensive / utility — underperform relatif</td></tr>
+      <tr><td style="padding:20px 26px;">Siklus<br>Komoditas Naik</td><td class="favored" style="padding:20px 26px;">Produsen, logistik terkait</td><td class="pressured" style="padding:20px 26px;">Pengguna hilir dari komoditas tersebut</td></tr>
+      <tr><td style="padding:20px 26px;">BI Rate<br>Naik</td><td class="favored" style="padding:20px 26px;">Perbankan (margin bunga membaik)</td><td class="pressured" style="padding:20px 26px;">Properti, consumer kredit (cicilan lebih mahal)</td></tr>
+      <tr><td style="padding:20px 26px;">Foreign<br>Outflow Deras</td><td class="favored" style="padding:20px 26px;">Domestic-consumption, kepemilikan asing rendah — relatif lebih tahan</td><td class="pressured" style="padding:20px 26px;">Blue-chip & perbankan besar — porsi asing tinggi, paling terpukul</td></tr>
+    </tbody>
+  </table>
+  <div class="verify-tag" style="margin-top:10px; font-size:16px;">*fokus ke sektor paling sensitif terhadap 5 sinyal macro di atas — bukan mapping lengkap 11 sektor IDX-IC. Healthcare & Technology tidak dimasukkan karena lebih digerakkan cerita spesifik perusahaan, bukan siklus macro</div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>19 / 34</div></div>
+</div>
+
+<!-- SLIDE 18 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 20 - Case Study Sector">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Case Study</div>
+    <div class="slide-title">Menerapkan Pemetaan</div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Ingat: Sintesis Macro Menyimpulkan Defensif</div>
+      <div class="bullet-text">Regime saat ini condong Defensif (3 dari 5 sinyal menekan). Pemetaan sektor di bawah ini dipakai untuk kehati-hatian ekstra, bukan sinyal beli</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Berpotensi Diuntungkan (Dengan Catatan)</div>
+      <div class="bullet-text">Eksportir komoditas (CPO/batu bara), bisnis berpendapatan USD — tapi perlu diteliti ekstra karena sell-off saat ini broad-based</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Tertekan</div>
+      <div class="bullet-text">Consumer/retail bergantung impor, korporasi dengan utang USD besar</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>20 / 34</div></div>
+</div>
+
+<!-- SLIDE 19 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 21 - Jebakan Umum">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#e03a3a" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#e03a3a"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Jebakan Umum</div>
+    <div class="slide-title">Mengejar Setelah<br>Pergerakan Terjadi</div>
+    <div class="bullet-block warn">
+      <div class="bullet-text">Sektor yang sudah re-rated saat "sudah jelas" = beli berita, bukan beli setup</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Cara Cek</div>
+      <div class="bullet-text">Apakah valuasi sektor sudah re-rated dibanding historisnya sendiri, atau masih lagging dari perubahan macro?</div>
+    </div>
+    <div class="quote-line">Ini kenapa screening (bagian berikutnya) penting — arah sektor saja belum cukup</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>21 / 34</div></div>
+</div>
+
+<!-- SLIDE 20 — DIVIDER SECTION 4 -->
+<div class="page divider-page" data-document-role="page" data-label="Slide 22 - Divider Section 4">
+  <div class="divider-num">04</div>
+  <div class="divider-content">
+    <div class="divider-eyebrow">Bagian 04</div>
+    <div class="divider-title">Screening</div>
+    <div class="divider-line"></div>
+    <div class="divider-sub">Sektor bagus bukan jaminan saham bagus — di sini kita saring satu per satu.</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>22 / 34</div></div>
+</div>
+
+<!-- SLIDE 21 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 23 - Menentukan Universe">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Screening</div>
+    <div class="slide-title">Menentukan Universe</div>
+    <div class="bullet-block">
+      <div class="bullet-text">Dalam sektor yang diuntungkan, saham apa saja yang benar-benar masuk scope?</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Exclude: Likuiditas</div>
+      <div class="bullet-text">Rata-rata nilai transaksi harian &lt; Rp1 miliar (3 bulan terakhir) → sulit masuk/keluar posisi tanpa gerakkan harga</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Exclude: Free Float</div>
+      <div class="bullet-text">Free float &lt; 15% — cek via kolom Free Float di Stockbit Screener, bukan halaman saham individual</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Exclude: Notasi Khusus & Suspend</div>
+      <div class="bullet-text">Badge huruf di belakang kode saham di Stockbit (Notasi A/D/E/B = masalah akuntan/ekuitas/pailit), atau status suspend dari BEI → exclude langsung</div>
+      <div class="verify-tag">*periksa juga secara manual: pola transaksi related-party yang tidak wajar atau pergantian auditor yang sering — belum tentu sudah kena notasi khusus</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Realistisnya</div>
+      <div class="bullet-text">Satu sektor bisa punya 15-40 ticker sebelum filter fundamental apa pun</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>23 / 34</div></div>
+</div>
+
+<!-- SLIDE 22 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 24 - Filter 1">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Filter 1</div>
+    <div class="slide-title">Profitabilitas &<br>Kesehatan Neraca</div>
+    <div class="bullet-block">
+      <div class="bullet-label">Profitabilitas</div>
+      <div class="bullet-text">Revenue tumbuh YoY, operating profit positif, dan ROE &gt; 5% (patokan umum untuk kategori "sehat" di BEI — sektor padat aset seperti komoditas/perkebunan wajar punya ROE lebih rendah dari sektor asset-light)</div>
+      <div class="verify-tag">*pakai operating profit, bukan net profit — net profit gampang terdistorsi untung/rugi selisih kurs saat rupiah bergejolak seperti sekarang</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">DER (Debt to Equity Ratio)</div>
+      <div class="bullet-text">DER &lt; 1x untuk sektor umum. Untuk sektor padat modal (infrastruktur, komoditas, properti) toleransi sampai DER &lt; 2x — capex besar wajar butuh utang lebih tinggi</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Cek Operating Cash Flow</div>
+      <div class="bullet-text">Lihat arah tren-nya (membaik/memburuk), bukan aturan kaku "harus positif" — saham fase growth/capex tinggi bisa OCF negatif sementara dan tetap sehat</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Cek Penurunan Margin</div>
+      <div class="bullet-text">Bandingkan gross/operating margin beberapa kuartal terakhir dengan tren sebelumnya dan rata-rata sektor. Jika ada penurunan yang tidak wajar = red flag pricing power</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>24 / 34</div></div>
+</div>
+
+<!-- SLIDE 23 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 25 - Filter 2">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Filter 2</div>
+    <div class="slide-title">Red Flag Valuasi</div>
+    <div class="bullet-block warn">
+      <div class="bullet-text">Sektor bagus ≠ saham bagus — saham bisa ada di sektor yang tepat tapi tetap mahal</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Cek P/E &amp; P/BV</div>
+      <div class="bullet-text">Bandingkan P/E &amp; P/BV saat ini dengan PE/PBV Standard Deviation Band dari histori saham itu sendiri. Dekat atau di atas +1/+2 SD = relatif overvalued, dekat atau di bawah -1/-2 SD = relatif undervalued, di sekitar rata-rata = harga wajar</div>
+    </div>
+    <div class="bullet-block">
+      <div class="bullet-label">Cek P/BV (Sektor Padat Aset)</div>
+      <div class="bullet-text">Khusus sektor padat aset (bank, komoditas, properti): P/BV &gt; 2x tanpa ROE &gt; 15% sebagai justifikasi = red flag</div>
+    </div>
+    <div class="quote-line">Ini masih screening, bukan valuasi — valuasi sebenarnya ada di Tools Valuasi Saham</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>25 / 34</div></div>
+</div>
+
+<!-- SLIDE 25 — FUNNEL CONTINUED -->
+<div class="page content-page" data-document-role="page" data-label="Slide 26 - Menjalankan Funnel">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Case Study Berlanjut</div>
+    <div class="slide-title">Menjalankan Funnel</div>
+    <div class="funnel-wrap">
+      <div class="funnel-bar" style="width:100%; font-size:22px;">900+ TICKER</div>
+      <div class="funnel-bar step2" style="width:80%; font-size:22px;">FILTER SEKTOR (~20-40)</div>
+      <div class="funnel-bar step3" style="width:60%; font-size:22px;">FILTER PROFITABILITAS/NERACA</div>
+      <div class="funnel-bar step4" style="width:44%; font-size:20px;">FILTER RED FLAG VALUASI</div>
+    </div>
+    <div class="quote-line" style="text-align:center; align-self:center;">Output: shortlist berisi saham yang layak divaluasi lebih lanjut</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>26 / 34</div></div>
+</div>
+
+<!-- SLIDE 26 — AALI WORKED EXAMPLE -->
+<div class="page content-page" data-document-role="page" data-label="Slide 27 - AALI Worked Example">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:80px;">
+    <div class="slide-kicker">Contoh Lengkap</div>
+    <div class="ticker-badge">AALI</div>
+    <div class="slide-title" style="margin-bottom:36px;">Astra Agro Lestari</div>
+    <div class="bullet-block">
+      <div class="bullet-text">Eksportir CPO, pendapatan berbasis USD (diuntungkan rupiah lemah), governance grup Astra, likuid</div>
+    </div>
+    <ul class="plain-list">
+      <li>Macro fit: rupiah melemah — <strong>tapi cek dulu penyebabnya</strong> (structural vs confidence-crisis) sebelum asumsi untung margin otomatis</li>
+      <li>Sector fit: pemetaan eksportir komoditas, dengan catatan ekstra kehati-hatian</li>
+      <li>Filter profitabilitas & red flag valuasi: angka lengkap di slide berikutnya → <strong style="color:var(--green)">masuk shortlist</strong></li>
+    </ul>
+    <div class="bullet-block warn" style="margin-top:10px;">
+      <div class="bullet-label warn">Item yang Perlu Dipantau</div>
+      <div class="bullet-text">Regulasi ekspor CPO/batu bara via DSI (Danantara Sumberdaya Indonesia) sedang bertransisi — bukan red flag governance, tapi item regulasi yang perlu terus dipantau</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>27 / 34</div></div>
+</div>
+
+<!-- SLIDE NEW — AALI Angka Fundamental -->
+<div class="page content-page" data-document-role="page" data-label="Slide 28 - AALI Angka Fundamental">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Contoh Lengkap — Lanjutan</div>
+    <div class="slide-title tight">AALI: Angka Fundamental</div>
+    <div class="bullet-label alt" style="margin-bottom:16px;">Kuartal Terbaru (Q1 2026, per 31 Maret 2026) vs Q1 2025</div>
+    <table class="sector-table">
+      <tbody>
+        <tr><td style="font-size:20px;">Revenue YoY</td><td class="favored" colspan="2">Rp7,50 T (+6,8% dari Rp7,02 T) — melambat dari laju FY2025 (+31,3%)</td></tr>
+        <tr><td style="font-size:20px;">Laba Bersih YoY</td><td class="favored" colspan="2">Rp373,4 M (+34,8% dari Rp277,0 M)</td></tr>
+        <tr><td style="font-size:20px;">Laba Operasional YoY</td><td class="favored" colspan="2">Rp725 M (+51,9%) — efisiensi biaya menopang margin</td></tr>
+        <tr><td style="font-size:20px;">DER</td><td class="favored" colspan="2">0,14x (per Mar 2026) — jauh di bawah 1x</td></tr>
+      </tbody>
+    </table>
+    <div class="bullet-label alt" style="margin-top:18px; margin-bottom:12px;">Basis TTM (Trailing Twelve Months, per Jun 2026)</div>
+    <table class="sector-table">
+      <tbody>
+        <tr><td style="font-size:20px;">ROE (TTM)</td><td class="favored" colspan="2">6,84% — lolos batas &gt;5%</td></tr>
+        <tr><td style="font-size:20px;">P/E &amp; P/BV</td><td class="favored" colspan="2">~9,2x &amp; 0,6x (estimasi 2026F, riset Ciptadana Mei 2026)</td></tr>
+      </tbody>
+    </table>
+    <div class="quote-line">Momentum profitabilitas masih kuat meski pertumbuhan revenue melambat → lolos filter profitabilitas & red flag valuasi → <strong style="color:var(--green)">masuk shortlist</strong></div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>28 / 34</div></div>
+</div>
+<!-- SLIDE 27 — DIVIDER SECTION 5 -->
+<div class="page divider-page" data-document-role="page" data-label="Slide 29 - Divider Section 5">
+  <div class="divider-num">05</div>
+  <div class="divider-content">
+    <div class="divider-eyebrow">Bagian 05</div>
+    <div class="divider-title">Handoff &<br>Penutup</div>
+    <div class="divider-line"></div>
+    <div class="divider-sub">Shortlist sudah di tangan — sekarang saatnya cari harga wajarnya.</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>29 / 34</div></div>
+</div>
+
+<!-- SLIDE 28 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 30 - Shortlist Is Isnt">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Handoff</div>
+    <div class="slide-title">Apa Itu Shortlist<br>(dan Apa yang Bukan)</div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Adalah</div>
+      <div class="bullet-text">Daftar kandidat yang layak diteliti lebih dalam</div>
+    </div>
+    <div class="bullet-block warn">
+      <div class="bullet-label warn">Bukan</div>
+      <div class="bullet-text">Daftar beli, bukan valuasi, bukan jaminan</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>30 / 34</div></div>
+</div>
+
+<!-- SLIDE 29 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 31 - Nilai Intrinsik">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Handoff</div>
+    <div class="slide-title">Kenapa Nilai Intrinsik<br>Jadi Bagian yang Hilang</div>
+    <div class="bullet-block">
+      <div class="bullet-text">Screening bilang "layak diselidiki" — bukan "layak dibeli di harga sekarang"</div>
+    </div>
+    <div class="quote-line">Dua saham bisa lolos semua filter tapi punya margin of safety yang jauh berbeda</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>31 / 34</div></div>
+</div>
+
+<!-- SLIDE 30 -->
+<div class="page content-page" data-document-role="page" data-label="Slide 32 - Tools Valuasi Handoff">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Handoff</div>
+    <div class="slide-title">Di Sinilah Tools Valuasi<br>Saham Mengambil Alih</div>
+    <div class="bullet-block">
+      <div class="bullet-text">Shortlist dari framework ini → jadi input ke Tools Valuasi Saham</div>
+    </div>
+    <div class="bullet-block alt">
+      <div class="bullet-label alt">Mekanisme Singkat</div>
+      <div class="bullet-text">Memproyeksikan arus kas masa depan perusahaan selama 5 tahun ke depan, lalu menghitung berapa nilai itu setara dengan uang hari ini — hasilnya jadi estimasi harga wajar saham</div>
+    </div>
+    <div class="quote-line">Kamu sudah tahu saham mana yang layak dicek — tools ini yang kasih tahu harga wajarnya</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>32 / 34</div></div>
+</div>
+
+<!-- SLIDE 31 — RECAP FUNNEL -->
+<div class="page content-page" data-document-role="page" data-label="Slide 33 - Recap Loop">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#8a8fa8" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#8a8fa8"/></svg></div>
+  <div style="margin-top:100px;">
+    <div class="slide-kicker">Penutup</div>
+    <div class="slide-title">Rekap: Loop yang<br>Bisa Diulang</div>
+    <div class="funnel-wrap">
+      <div class="funnel-bar" style="width:100%;">MACRO</div>
+      <div class="funnel-bar step2" style="width:82%;">SECTOR</div>
+      <div class="funnel-bar step3" style="width:64%;">SCREEN</div>
+      <div class="funnel-bar step4" style="width:46%;">SHORTLIST → VALUASI</div>
+    </div>
+    <div class="quote-line" style="text-align:center; align-self:center;">Ini proses yang kamu jalankan ulang tiap edisi, bukan analisis sekali jadi</div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>33 / 34</div></div>
+</div>
+
+<!-- SLIDE 32 — DUAL CTA (no price) -->
+<div class="page content-page" data-document-role="page" data-label="Slide 34 - CTA">
+  <div class="crosshair-sm"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="32" cy="32" r="26" stroke="#f5c542" stroke-width="2"/><circle cx="32" cy="32" r="4" fill="#f5c542"/></svg></div>
+  <div style="margin-top:90px;">
+    <div class="slide-kicker">Langkah Selanjutnya</div>
+    <div class="slide-title">Dari Shortlist ke<br>Keputusan</div>
+    <div class="cta-block primary">
+      <div class="cta-tag">Langkah Lanjutan</div>
+      <div class="cta-title">Tools Valuasi Saham</div>
+      <div class="cta-desc" style="margin-bottom:0;">Hitung harga wajar dari shortlist kamu — siap pakai untuk BEI & saham US</div>
+    </div>
+    <div class="cta-block">
+      <div class="cta-tag secondary">Alternatif</div>
+      <div class="cta-title" style="font-size:38px;">Watchlist Saham Undervalued</div>
+      <div class="cta-desc">Pendekatan top-down yang sama, dikerjakan untukmu setiap bulan</div>
+    </div>
+  </div>
+  <div class="slide-footer"><div>TOP-DOWN FRAMEWORK — SNIPER SAHAM</div><div>34 / 34</div></div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Tools Valuasi Saham Ad — Sniper Saham</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #444;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page {
+    width: 1080px;
+    height: 1350px;
+    background: #0d0f14;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 40px auto;
+    overflow: hidden;
+    position: relative;
+    padding: 72px 64px;
+  }
+
+  .page-number {
+    position: absolute;
+    top: 40px;
+    right: 48px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #8a8fa8;
+  }
+
+  .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #f5c542;
+    margin-bottom: 20px;
+  }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 58px;
+    line-height: 1.15;
+    color: #e8eaf0;
+    letter-spacing: 0.5px;
+  }
+
+  .body-text {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.55;
+    color: #e8eaf0;
+    margin-top: 24px;
+  }
+
+  .body-text b { color: #f5c542; font-weight: 700; }
+
+  .muted {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 20px;
+    color: #8a8fa8;
+  }
+
+  .cta-block {
+    background: #e03a3a;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    padding: 24px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 40px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    color: #e8eaf0;
+    letter-spacing: 1px;
+  }
+  .brand span { color: #e03a3a; }
+
+  .tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    letter-spacing: 1px;
+    color: #8a8fa8;
+    text-transform: uppercase;
+  }
+
+  /* Slide 1 centering */
+  .center-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Slide 1 chart-texture background */
+  .chart-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    opacity: 0.16;
+  }
+
+  .chart-bg-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, #0d0f14 0%, rgba(13,15,20,0.75) 30%, rgba(13,15,20,0.92) 65%, #0d0f14 100%);
+  }
+
+  /* Slide 2 DCF diagram */
+  .diagram-wrap {
+    margin-top: 36px;
+    background: #13161e;
+    border: 1px solid #1a1e2a;
+    border-radius: 14px;
+    padding: 32px 24px 20px 24px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- SLIDE 1 — Hook -->
+  <div class="page" data-document-role="page">
+    <div class="chart-bg">
+      <svg viewBox="0 0 1080 1350" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+        <!-- randomized candlestick chart pattern filling the slide -->
+        <!-- wicks -->
+        <g stroke="#8a8fa8" stroke-width="3">
+          <line x1="60" y1="520" x2="60" y2="700"/>
+          <line x1="115" y1="480" x2="115" y2="640"/>
+          <line x1="170" y1="560" x2="170" y2="760"/>
+          <line x1="225" y1="420" x2="225" y2="600"/>
+          <line x1="280" y1="500" x2="280" y2="680"/>
+          <line x1="335" y1="380" x2="335" y2="560"/>
+          <line x1="390" y1="440" x2="390" y2="620"/>
+          <line x1="445" y1="340" x2="445" y2="520"/>
+          <line x1="500" y1="400" x2="500" y2="580"/>
+          <line x1="555" y1="300" x2="555" y2="480"/>
+          <line x1="610" y1="360" x2="610" y2="540"/>
+          <line x1="665" y1="260" x2="665" y2="440"/>
+          <line x1="720" y1="320" x2="720" y2="500"/>
+          <line x1="775" y1="220" x2="775" y2="400"/>
+          <line x1="830" y1="280" x2="830" y2="460"/>
+          <line x1="885" y1="180" x2="885" y2="360"/>
+          <line x1="940" y1="240" x2="940" y2="420"/>
+          <line x1="995" y1="150" x2="995" y2="330"/>
+        </g>
+        <!-- candle bodies (mix of gold=up and muted=down) -->
+        <g>
+          <rect x="45" y="560" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="100" y="510" width="30" height="80" fill="#f5c542" opacity="0.7"/>
+          <rect x="155" y="600" width="30" height="100" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="210" y="460" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="265" y="540" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="320" y="420" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="375" y="480" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="430" y="380" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="485" y="440" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="540" y="340" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="595" y="400" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="650" y="300" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="705" y="360" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="760" y="260" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="815" y="320" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="870" y="220" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+          <rect x="925" y="280" width="30" height="90" fill="#8a8fa8" opacity="0.7"/>
+          <rect x="980" y="190" width="30" height="90" fill="#f5c542" opacity="0.7"/>
+        </g>
+        <!-- faint upward trend line through it -->
+        <polyline points="60,610 170,660 280,590 390,530 500,490 610,470 720,410 830,370 940,330 995,240"
+          fill="none" stroke="#f5c542" stroke-width="4" opacity="0.5"/>
+      </svg>
+    </div>
+    <div class="chart-bg-fade"></div>
+    <div class="page-number" style="z-index: 3;">1 / 3</div>
+    <div class="center-content">
+      <div class="eyebrow">Tools Valuasi Saham</div>
+      <div class="headline">SAHAM INI MURAH?<br>ATAU CUMA FEELING?</div>
+      <div class="body-text">
+        Kebanyakan investor retail nilai saham pakai insting, bukan hitungan.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — Method explainer with DCF diagram -->
+  <div class="page" data-document-role="page">
+    <div class="page-number">2 / 3</div>
+    <div class="eyebrow">Metodologi</div>
+    <div class="headline" style="font-size: 40px;">Ada 2 Cara Klasik<br>Menghitung Harga Wajar Saham</div>
+
+    <div class="diagram-wrap" style="padding: 24px 24px 16px 24px; margin-top: 24px;">
+      <svg viewBox="0 0 950 320" xmlns="http://www.w3.org/2000/svg">
+        <!-- baseline -->
+        <line x1="60" y1="220" x2="890" y2="220" stroke="#2a2f3d" stroke-width="2"/>
+
+        <!-- year bars -->
+        <rect x="90" y="165" width="70" height="55" rx="6" fill="#1a1e2a" stroke="#f5c542" stroke-width="2"/>
+        <text x="125" y="197" text-anchor="middle" fill="#f5c542" font-family="DM Sans" font-weight="700" font-size="20">CF1</text>
+        <text x="125" y="248" text-anchor="middle" fill="#8a8fa8" font-family="DM Sans" font-size="16">Tahun 1</text>
+
+        <rect x="230" y="148" width="70" height="72" rx="6" fill="#1a1e2a" stroke="#f5c542" stroke-width="2"/>
+        <text x="265" y="190" text-anchor="middle" fill="#f5c542" font-family="DM Sans" font-weight="700" font-size="20">CF2</text>
+        <text x="265" y="248" text-anchor="middle" fill="#8a8fa8" font-family="DM Sans" font-size="16">Tahun 2</text>
+
+        <rect x="370" y="130" width="70" height="90" rx="6" fill="#1a1e2a" stroke="#f5c542" stroke-width="2"/>
+        <text x="405" y="180" text-anchor="middle" fill="#f5c542" font-family="DM Sans" font-weight="700" font-size="20">CF3</text>
+        <text x="405" y="248" text-anchor="middle" fill="#8a8fa8" font-family="DM Sans" font-size="16">Tahun 3</text>
+
+        <text x="500" y="195" text-anchor="middle" fill="#8a8fa8" font-family="DM Sans" font-size="28">...</text>
+
+        <rect x="560" y="108" width="70" height="112" rx="6" fill="#1a1e2a" stroke="#f5c542" stroke-width="2"/>
+        <text x="595" y="170" text-anchor="middle" fill="#f5c542" font-family="DM Sans" font-weight="700" font-size="20">CFn</text>
+        <text x="595" y="248" text-anchor="middle" fill="#8a8fa8" font-family="DM Sans" font-size="16">Tahun N</text>
+
+        <line x1="125" y1="165" x2="800" y2="75" stroke="#f5c542" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.55"/>
+        <line x1="265" y1="148" x2="800" y2="75" stroke="#f5c542" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.55"/>
+        <line x1="405" y1="130" x2="800" y2="75" stroke="#f5c542" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.55"/>
+        <line x1="595" y1="108" x2="800" y2="75" stroke="#f5c542" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.55"/>
+
+        <rect x="700" y="35" width="220" height="82" rx="10" fill="#f5c542"/>
+        <text x="810" y="68" text-anchor="middle" fill="#0d0f14" font-family="DM Sans" font-weight="700" font-size="16">NILAI PERUSAHAAN</text>
+        <text x="810" y="92" text-anchor="middle" fill="#0d0f14" font-family="DM Sans" font-weight="700" font-size="16">HARI INI</text>
+
+        <!-- legend -->
+        <rect x="60" y="270" width="18" height="18" rx="3" fill="#1a1e2a" stroke="#f5c542" stroke-width="2"/>
+        <text x="86" y="284" fill="#8a8fa8" font-family="DM Sans" font-size="17">CF = Cash Flow, proyeksi arus kas perusahaan di tahun tersebut</text>
+      </svg>
+    </div>
+
+    <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 16px;">
+      <div style="background: #13161e; border-left: 4px solid #f5c542; border-radius: 8px; padding: 16px 20px;">
+        <div style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 21px; color: #f5c542; margin-bottom: 6px;">Metode Discounted Cash Flow</div>
+        <div style="font-family: 'DM Sans', sans-serif; font-size: 19px; line-height: 1.5; color: #e8eaf0;">
+          Menghitung nilai perusahaan dari proyeksi arus kas yang akan dihasilkannya ke depan, lalu didiskon ke nilai hari ini.
+        </div>
+      </div>
+      <div style="background: #13161e; border-left: 4px solid #f5c542; border-radius: 8px; padding: 16px 20px;">
+        <div style="font-family: 'DM Sans', sans-serif; font-weight: 700; font-size: 21px; color: #f5c542; margin-bottom: 6px;">Metode Dividend Discount Model</div>
+        <div style="font-family: 'DM Sans', sans-serif; font-size: 19px; line-height: 1.5; color: #e8eaf0;">
+          Pakai logika yang sama, tapi fokus ke dividen yang akan dibagikan perusahaan ke investornya.
+        </div>
+      </div>
+    </div>
+
+    <div class="body-text" style="font-size: 22px; margin-top: 22px;">
+      <b>Tools Valuasi Saham</b> pakai kedua metode ini untuk menghitung nilai intrinsik saham apapun di BEI.
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — Time-to-value + CTA -->
+  <div class="page" data-document-role="page">
+    <div class="page-number">3 / 3</div>
+    <div class="center-content" style="gap: 28px;">
+      <div class="headline">Kurang dari 5 Menit,<br>Langsung Tau Harga Wajar</div>
+      <div class="muted" style="font-size: 24px;">Sekali bayar, pakai selamanya.</div>
+      <div class="cta-block" style="margin-top: 20px; width: fit-content;">Klik: Coba Sekarang</div>
+    </div>
+    <div class="footer">
+      <div>
+        <div class="brand">SNIPER<span>SAHAM</span></div>
+        <div class="tagline">Precision. Patience. Profit.</div>
+      </div>
+      <div class="tagline">snipersaham.com</div>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<title>Silica Mystery Carousel v2 — Sniper Saham</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #444;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .page {
+    width: 1080px;
+    height: 1350px;
+    background: #0d0f14;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 40px auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* === LAYOUT A: top image block + text block below === */
+  .hero-image {
+    width: 100%;
+    height: 620px;
+    background: #1a1e2a;
+    background-image: repeating-linear-gradient(
+      45deg, #1a1e2a, #1a1e2a 20px, #13161e 20px, #13161e 40px
+    );
+    border-bottom: 2px solid #f5c542;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .hero-image span {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #8a8fa8;
+    background: #0d0f14cc;
+    padding: 14px 28px;
+    border: 1px dashed #8a8fa8;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    max-width: 80%;
+  }
+
+  .content {
+    flex: 1;
+    padding: 56px 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 26px;
+  }
+
+  /* === LAYOUT B: full-bleed background image with dark overlay, text on top === */
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: #1a1e2a;
+    background-image: repeating-linear-gradient(
+      45deg, #1a1e2a, #1a1e2a 20px, #13161e 20px, #13161e 40px
+    );
+  }
+
+  .hero-bg .placeholder-label {
+    position: absolute;
+    top: 40px;
+    left: 64px;
+    right: 64px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #8a8fa8;
+    background: #0d0f14cc;
+    padding: 10px 18px;
+    border: 1px dashed #8a8fa8;
+    border-radius: 6px;
+    display: inline-block;
+    width: fit-content;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(13,15,20,0.35) 0%, rgba(13,15,20,0.55) 45%, rgba(13,15,20,0.96) 78%, #0d0f14 100%);
+  }
+
+  .content-overlay {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    padding: 56px 64px 80px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    z-index: 2;
+  }
+
+  /* Shared text styles */
+  .eyebrow {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #f5c542;
+  }
+
+  .headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 54px;
+    line-height: 1.15;
+    color: #e8eaf0;
+    letter-spacing: 0.5px;
+  }
+
+  .body-text {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+    line-height: 1.5;
+    color: #e8eaf0;
+  }
+
+  .body-text b, .gold { color: #f5c542; font-weight: 700; }
+
+  .muted {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 22px;
+    color: #8a8fa8;
+    font-style: italic;
+  }
+
+  .cta-block {
+    background: #e03a3a;
+    color: #fff;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    text-align: center;
+    padding: 24px;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 40px;
+    left: 64px;
+    right: 64px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 2;
+  }
+
+  .brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 26px;
+    color: #e8eaf0;
+    letter-spacing: 1px;
+  }
+  .brand span { color: #e03a3a; }
+
+  .tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #8a8fa8;
+    text-transform: uppercase;
+  }
+
+  .page-number {
+    position: absolute;
+    top: 40px;
+    right: 48px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: #e8eaf0;
+    z-index: 3;
+    background: #0d0f14aa;
+    padding: 6px 14px;
+    border-radius: 6px;
+  }
+</style>
+</head>
+<body>
+
+  <!-- SLIDE 1 — Hook: Kemenperin roadmap (LAYOUT B: full-bleed image + overlay) -->
+  <div class="page" data-document-role="page">
+    <div class="hero-bg">
+      <div class="placeholder-label">[GANTI: foto tambang pasir silika / peta Indonesia]</div>
+    </div>
+    <div class="overlay"></div>
+    <div class="page-number">1 / 4</div>
+    <div class="content-overlay">
+      <div class="eyebrow">Desember 2025</div>
+      <div class="body-text">
+        Kemenperin resmi luncurkan <b>Peta Jalan Hilirisasi Silika 2025–2045</b>. Klaimnya: olah pasir silika
+        jadi wafer silikon, nilainya bisa naik sampai <b>1.300 kali lipat</b>. Indonesia sudah punya cadangan
+        <b>7,8 miliar ton</b>.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2 — Danantara catalyst (LAYOUT A: top image + text block) -->
+  <div class="page" data-document-role="page">
+    <div class="page-number">2 / 4</div>
+    <div class="hero-image"><span>[GANTI: foto Danantara / proyek PLTS / panel surya]</span></div>
+    <div class="content">
+      <div class="eyebrow">Katalis baru: Juli 2026</div>
+      <div class="body-text">
+        Danantara — lembaga investasi negara — umumkan rencana masuk ke industri hulu panel surya,
+        dengan pasir silika sebagai bahan baku utama. Proyek jangkarnya: program <b>PLTS 100 GW</b>.
+      </div>
+      <div class="muted">Masih tahap rencana — tapi ini permintaan yang didorong negara, bukan sekadar potensi di atas kertas.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3 — Mystery pivot + JV tease (LAYOUT B: full-bleed image + overlay) -->
+  <div class="page" data-document-role="page">
+    <div class="hero-bg">
+      <div class="placeholder-label">[GANTI: siluet grafik saham / peta Kalimantan Barat — tetap misterius]</div>
+    </div>
+    <div class="overlay"></div>
+    <div class="page-number">3 / 4</div>
+    <div class="content-overlay">
+      <div class="eyebrow">Ada satu nama</div>
+      <div class="headline">Satu Emiten BEI<br>Sudah Gerak Duluan</div>
+      <div class="body-text">
+        Konsesi pasir silika <b>terluas</b> di antara emiten manapun untuk komoditas ini — plus joint venture
+        dengan perusahaan asing yang sudah membeli saham langsung di perusahaan ini. Rencananya: kawasan
+        industri hilirisasi silika terpadu.
+      </div>
+      <div class="muted">JV ini masih tahap sangat awal — bukan sesuatu yang sudah berjalan.</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4 — CTA -->
+  <div class="page" data-document-role="page">
+    <div class="page-number">4 / 4</div>
+    <div class="content" style="justify-content: center; flex: 1; padding-top: 100px;">
+      <div class="headline" style="font-size: 64px;">Siapa Emitennya?</div>
+      <div class="body-text">
+        Apa izin yang ditunggu, dan berapa ukuran taruhan yang masuk akal — lengkap di watchlist
+        Sniper Saham.
+      </div>
+      <div class="cta-block">CEK WATCHLIST SNIPER SAHAM →</div>
+    </div>
+    <div class="footer">
+      <div>
+        <div class="brand">SNIPER<span>SAHAM</span></div>
+        <div class="tagline">Precision. Patience. Profit.</div>
+      </div>
+      <div class="tagline">snipersaham.com/watchlist</div>
+    </div>
+  </div>
+
+</body>
+</html>
